@@ -1,0 +1,84 @@
+CURRICULUM VITAE
+
+PERSONAL INFORMATION
+--------------------
+Full Name: PIRAMOE STEPHEN
+Phone Number: +256 769 330 215
+Date of Birth: 3rd March 2002
+Email Address: stephenpiramoe@gmail.com
+Location: Kampala, Uganda
+Nationality: Ugandan
+LinkedIn: https://www.linkedin.com/in/stephen-piramoe
+Portfolio/Website: [Add your portfolio URL here]
+
+PROFESSIONAL SUMMARY
+--------------------
+Motivated and detail-oriented software developer with experience building full-stack applications and mobile solutions. Skilled in React, Node.js, database design, and network infrastructure. Seeking to contribute strong analytical, teamwork, and problem-solving abilities in a dynamic organization. Passionate about delivering high-quality results and continuous learning.
+
+EDUCATION
+---------
+BSc Information Technology
+Uganda Christian University
+Location: Kampala, Uganda
+Year: [Start Year – End Year]
+Key Focus: Full-stack application development, database systems, networking, cybersecurity.
+
+WORK EXPERIENCE
+---------------
+[Job Title] – [Company Name]
+Location: [City, Country]
+Dates: [Month/Year – Month/Year]
+- Developed and maintained web and mobile applications using React, React Native, and Node.js.
+- Designed RESTful APIs and integrated authentication with JWT.
+- Improved application performance and usability through responsive design and user-focused features.
+
+[Job Title] – [Company Name]
+Location: [City, Country]
+Dates: [Month/Year – Month/Year]
+- Supported backend systems and database operations using MySQL and Sequelize.
+- Assisted in building real-time communication features with Socket.io and WebRTC.
+- Collaborated with team members to deliver project milestones on time.
+
+SKILLS
+------
+- React, React Native, Expo
+- HTML, CSS, JavaScript
+- Node.js, Express, REST APIs
+- MySQL, Sequelize, Firebase
+- Socket.io, WebRTC
+- Cybersecurity tools (Kali Linux, Nmap, Burp Suite)
+- Cisco Packet Tracer, VLANs, L3 Switching
+- Git/GitHub, VS Code
+
+CERTIFICATIONS (Optional)
+-------------------------
+- [Certificate Name], [Institution], [Year]
+- [Certificate Name], [Institution], [Year]
+
+PROJECTS (Optional)
+-------------------
+Music Streaming SaaS
+- Built a music streaming platform with user authentication, playlists, and media playback controls.
+- Tools used: React, Node.js, MySQL.
+
+Real-time Messaging App
+- Built a WhatsApp-style messaging platform with Socket.io-powered chat and video call support.
+- Tools used: React, Node.js, WebRTC.
+
+Emergency Response Platform
+- Built an emergency services platform for healthcare response coordination.
+- Tools used: React Native, Firebase, Node.js.
+
+LANGUAGES
+---------
+- English – Fluent
+- [Other Language] – [Level]
+
+REFERENCES
+----------
+Available upon request.
+
+OR
+
+Referee Name – [Job Title, Organization]
+Contact: [Phone/Email]

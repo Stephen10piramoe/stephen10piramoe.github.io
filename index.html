@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piramoe — Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --ink: #111827;
+  --ink-muted: #4b5563;
+  --ink-faint: #6b7280;
+  --line: #d1d5db;
+  --blue: #1f4d7a;
+  --gold: #d97706;
+  --gold-light: #f8fafc;
+  --nav-bg: rgba(255, 255, 255, 0.94);
+}
+
+[data-theme="dark"] {
+  --bg: #111827;
+  --surface: #1f2937;
+  --ink: #f8fafc;
+  --ink-muted: #cbd5e1;
+  --ink-faint: #94a3b8;
+  --line: #334155;
+  --blue: #60a5fa;
+  --gold: #fbbf24;
+  --gold-light: #475569;
+  --nav-bg: rgba(15, 23, 42, 0.94);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.3s, border-color 0.3s;
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+.nav-right { display: flex; align-items: center; gap: 2rem; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-muted); text-decoration: none;
+  letter-spacing: 0.03em; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+/* DARK MODE TOGGLE */
+.theme-toggle {
+  width: 36px; height: 20px;
+  background: var(--line);
+  border-radius: 20px;
+  border: none; cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  transition: transform 0.25s, background 0.3s;
+}
+[data-theme="dark"] .theme-toggle::after {
+  transform: translateX(16px);
+  background: var(--gold);
+}
+[data-theme="dark"] .theme-toggle { background: var(--line); }
+
+/* SECTIONS */
+section { padding: 3.5rem 2rem; }
+
+/* HERO */
+#hero {
+  min-height: calc(100vh - 3.5rem);
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: 5.5rem;
+  max-width: 900px; margin: 0 auto;
+}
+
+/* HERO LAYOUT with avatar */
+.hero-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 3rem; margin-bottom: 0;
+}
+.hero-text { flex: 1; }
+
+/* AVATAR */
+.hero-avatar {
+  flex-shrink: 0;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.3s forwards;
+}
+.avatar-ring {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  padding: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 0 0 rgba(63, 59, 77, 0);
+}
+.avatar-ring:hover {
+  border-color: var(--blue);
+  box-shadow: 0 0 25px rgba(31, 77, 122, 0.35);
+  transform: scale(1.05);
+}
+.avatar-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue) 0%, rgba(31, 77, 122, 0.92) 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.avatar-inner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.avatar-inner.has-photo { background: none; }
+.avatar-inner.has-photo .avatar-initials { display: none; }
+.avatar-initials {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.8rem;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+  font-style: italic;
+  z-index: 1;
+}
+.upload-avatar {
+  margin-top: 0.5rem; display:flex; justify-content:center; gap:0.5rem;
+}
+#avatarInput { display: none; }
+.upload-avatar .btn { padding: 0.45rem 0.8rem; font-size: 12px; }
+.avatar-circuit {
+  position: absolute; inset: 0; opacity: 0.12;
+}
+.avatar-caption {
+  text-align: center;
+  margin-top: 0.6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.hero-label {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: 0.12em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+}
+.hero-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: 1.05; color: var(--ink);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.7s 0.25s forwards;
+}
+.hero-name em { font-style: italic; color: var(--blue); }
+.hero-sub {
+  font-size: 1rem; font-weight: 300;
+  color: var(--ink-muted); max-width: 480px;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+}
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.75rem; font-size: 14px; font-weight: 500;
+  text-decoration: none; border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer; border: none;
+  position: relative; overflow: hidden;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.18);
+  transition: left 0.3s;
+}
+.btn:hover::before { left: 100%; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(31, 77, 122, 0.18);
+}
+.btn-outline {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--line);
+}
+.btn-outline:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: rgba(31, 77, 122, 0.08);
+  transform: translateY(-2px);
+}
+.btn-cv {
+  background: var(--gold); color: var(--surface);
+  border: 1px solid transparent;
+}
+[data-theme="dark"] .btn-cv { color: var(--surface); }
+.btn-cv:hover {
+  background: var(--blue);
+  color: var(--surface);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(31, 77, 122, 0.18);
+}
+
+.hero-scroll {
+  margin-top: 4rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+}
+.scroll-line { width: 40px; height: 1px; background: var(--line); }
+.scroll-text {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase;
+}
+
+/* SECTION HEADER */
+.section-header {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.section-num {
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.section-title {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 1.05;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  opacity: 0.7;
+}
+
+.about-grid,
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 0.9fr;
+  gap: 2rem;
+  align-items: start;
+}
+.about-text p {
+  margin-bottom: 1.2rem;
+  color: var(--ink-muted);
+  max-width: 100%;
+}
+.katirok-badge {
+  display: inline-flex;
+  margin-bottom: 1.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  background: rgba(217, 119, 6, 0.1);
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+}
+.about-info {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.06);
+}
+.info-row {
+  display: flex; justify-content: space-between; gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding: 1rem 0;
+}
+.info-row:last-child { border-color: transparent; }
+.info-label {
+  color: var(--ink-faint);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+.info-value {
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.skill-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.05);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.skill-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue);
+}
+.skill-cat {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.skill-card h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(31, 77, 122, 0.05);
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+.tag:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: transparent;
+}
+
+.projects-list {
+  display: grid;
+  gap: 1.4rem;
+}
+.project-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.05);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.project-row:hover {
+  transform: translateY(-3px);
+  border-color: var(--blue);
+}
+.project-num {
+  margin-bottom: 0.75rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+.project-name {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+.project-desc {
+  margin: 1rem 0 0;
+  color: var(--ink-muted);
+  line-height: 1.8;
+}
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink-muted);
+  font-weight: 600;
+  justify-content: flex-end;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.dot.active { background: var(--blue); box-shadow: 0 0 0 4px rgba(31, 77, 122, 0.12); }
+.dot.completed { background: var(--gold); box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.12); }
+
+.contact-grid {
+  grid-template-columns: 1fr 1.15fr;
+}
+.contact-info {
+  display: grid;
+  gap: 1rem;
+}
+.contact-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.05);
+}
+.contact-item strong {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+}
+.contact-item a,
+.contact-item span {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.contact-form {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.05);
+}
+#contactForm {
+  display: grid;
+  gap: 1rem;
+}
+#contactForm input,
+#contactForm textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1rem 1rem;
+  background: rgba(247, 248, 250, 0.95);
+  color: var(--ink);
+  font: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+#contactForm input:focus,
+#contactForm textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(31, 77, 122, 0.08);
+}
+#contactForm textarea { min-height: 180px; resize: vertical; }
+
+footer {
+  padding: 3rem 2rem 2rem;
+}
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+}
+.footer-links a {
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+.footer-links a:hover { color: var(--ink); }
+
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 980px) {
+  nav { padding: 1rem 2rem; }
+  .nav-links { gap: 1rem; }
+  .hero-top { flex-direction: column-reverse; align-items: center; gap: 2rem; }
+  #hero { padding-top: 6.5rem; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, minmax(200px, 1fr)); }
+  .project-row { grid-template-columns: 1fr; }
+  .project-status { justify-content: flex-start; }
+}
+
+@media (max-width: 660px) {
+  nav { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .nav-right { width: 100%; justify-content: space-between; }
+  .nav-links { flex-wrap: wrap; gap: 0.75rem; }
+  .hero-top { align-items: stretch; }
+  .hero-label, .hero-name { text-align: left; }
+  .hero-actions { justify-content: flex-start; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  #contactForm textarea { min-height: 150px; }
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="#hero">PIRAMOE  STEPHEN✦ DEV</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-top">
+      <div class="hero-text">
+        <div class="hero-label">Full-Stack Developer · Kapedo, Uganda</div>
+        <h1 class="hero-name">Building <em>ideas</em><br>into software.</h1>
+        <p class="hero-sub">
+          First-year BSIT student at Uganda Christian University, building real-world apps under the KATIROK TECH SOLUTIONS brand — from mobile communication tools to emergency response platforms.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View my work →</a>
+          <a href="piramoe stephen-cv.pdf" download class="btn btn-cv">Download CV</a>
+          <a href="#contact" class="btn btn-outline">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-avatar">
+        <div class="avatar-ring">
+          <div class="avatar-inner" id="avatarInner">
+            <img id="defaultAvatar" src="assets/profile.png" alt="Profile photo" onerror="this.style.display='none'" />
+            <svg class="avatar-circuit" viewBox="0 0 130 130" fill="none">
+              <circle cx="65" cy="65" r="60" stroke="white" stroke-width="0.5" opacity="0.4"/>
+              <line x1="20" y1="65" x2="45" y2="65" stroke="white" stroke-width="0.8"/>
+              <line x1="85" y1="65" x2="110" y2="65" stroke="white" stroke-width="0.8"/>
+              <line x1="65" y1="20" x2="65" y2="45" stroke="white" stroke-width="0.8"/>
+              <line x1="65" y1="85" x2="65" y2="110" stroke="white" stroke-width="0.8"/>
+              <circle cx="45" cy="65" r="3" fill="white" opacity="0.6"/>
+              <circle cx="85" cy="65" r="3" fill="white" opacity="0.6"/>
+              <circle cx="65" cy="45" r="3" fill="white" opacity="0.6"/>
+              <circle cx="65" cy="85" r="3" fill="white" opacity="0.6"/>
+              <rect x="38" y="55" width="20" height="20" rx="2" stroke="white" stroke-width="0.6" opacity="0.3"/>
+              <rect x="72" y="55" width="20" height="20" rx="2" stroke="white" stroke-width="0.6" opacity="0.3"/>
+            </svg>
+            <span class="avatar-initials">P</span>
+          </div>
+        </div>
+        <div>
+          <div class="avatar-caption">KATIROK TECH SOLUTIONS</div>
+          <div class="upload-avatar">
+            <input id="avatarInput" type="file" accept="image/*" />
+            <button class="btn btn-outline" id="uploadAvatarBtn">Upload Photo</button>
+            <button class="btn btn-outline" id="removeAvatarBtn" style="display:none">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll to explore</span>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <div class="katirok-badge">✦ KATIROK TECH SOLUTIONS</div>
+        <p>I'm <strong>Piramoe stephen</strong>, a software developer and first-year BSIT student at Uganda Christian University, main campus mukono. I build across the full stack — from React Native mobile apps to Node.js backends and MySQL databases.</p>
+        <p>Under my developer brand <strong>KATIROK TECH SOLUTIONS</strong>, I've shipped multiple projects ranging from a music streaming SaaS to a WhatsApp-style messaging app and an emergency medical services platform designed for the Ugandan market.</p>
+        <p>I'm also active in cybersecurity (Kali Linux home lab, penetration testing) and network design, currently completing a Cisco Packet Tracer hierarchical network topology with VLANs and L3 switching.</p>
+      </div>
+      <div class="about-info">
+        <div class="info-row"><span class="info-label">University</span><span class="info-value">Uganda Christian University, Mukono</span></div>
+        <div class="info-row"><span class="info-label">Programme</span><span class="info-value">BSc Information Technology</span></div>
+        <div class="info-row"><span class="info-label">Developer Brand</span><span class="info-value">KATIROK TECH SOLUTIONS</span></div>
+        <div class="info-row"><span class="info-label">GitHub</span><span class="info-value">Stephen10piramoe</span></div>
+        <div class="info-row"><span class="info-label">Location</span><span class="info-value">karenga, Uganda</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-cat">Frontend</div>
+        <h3>Web & Mobile UI</h3>
+        <div class="skill-tags">
+          <span class="tag">React</span><span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">HTML/CSS</span><span class="tag">Tailwind</span><span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Backend</div>
+        <h3>Server & APIs</h3>
+        <div class="skill-tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">REST APIs</span><span class="tag">JWT Auth</span><span class="tag">Socket.io</span><span class="tag">Firebase</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Database</div>
+        <h3>Data & Storage</h3>
+        <div class="skill-tags"><span class="tag">MySQL</span><span class="tag">Sequelize</span><span class="tag">Firebase RTDB</span><span class="tag">SQL</span><span class="tag">Normalization</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Networking</div>
+        <h3>Networks & Infrastructure</h3>
+        <div class="skill-tags"><span class="tag">Cisco Packet Tracer</span><span class="tag">VLANs</span><span class="tag">L3 Switching</span><span class="tag">Subnetting</span><span class="tag">RIP v2</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Cybersecurity</div>
+        <h3>Security & Pen Testing</h3>
+        <div class="skill-tags"><span class="tag">Kali Linux</span><span class="tag">Metasploit</span><span class="tag">Nmap</span><span class="tag">Hydra</span><span class="tag">Burp Suite</span><span class="tag">VirtualBox</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-cat">Tools & Other</div>
+        <h3>Dev Tools & Data</h3>
+        <div class="skill-tags"><span class="tag">Git/GitHub</span><span class="tag">VS Code</span><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">LaTeX</span><span class="tag">SolidWorks</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-list">
+      <div class="project-row reveal">
+        <div>
+          <div class="project-num">001</div>
+          <h3 class="project-name">Florida Connect</h3>
+          <p class="project-desc">A WhatsApp-style real-time messaging mobile app built with React Native and Expo. Features deep blue & gold branding, Firebase-backed messaging, community Circles, and an AI assistant.</p>
+          <div class="project-stack"><span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">Firebase</span><span class="tag">JavaScript</span></div>
+        </div>
+        <div><div class="project-status"><div class="dot active"></div> In Development</div></div>
+      </div>
+      <div class="project-row reveal">
+        <div>
+          <div class="project-num">002</div>
+          <h3 class="project-name">RedRush EMS</h3>
+          <p class="project-desc">An Uber-style Emergency Medical Services platform for Uganda. Role-based login for patients, drivers, and dispatchers. Live Google Maps tracking, audio/video calling via Agora.</p>
+          <div class="project-stack"><span class="tag">React Native</span><span class="tag">Node.js</span><span class="tag">MySQL</span><span class="tag">Firebase</span><span class="tag">Agora</span></div>
+        </div>
+        <div><div class="project-status"><div class="dot"></div> Product Spec</div></div>
+      </div>
+      <div class="project-row reveal">
+        <div>
+          <div class="project-num">003</div>
+          <h3 class="project-name">MusicGrab</h3>
+          <p class="project-desc">A full-stack music streaming and download SaaS. React frontend, Node.js/Express backend, MySQL, JWT auth, Jamendo API integration, and Flutterwave MTN/Airtel Mobile Money payments. Ships as a PWA.</p>
+          <div class="project-stack"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MySQL</span><span class="tag">Jamendo API</span><span class="tag">Flutterwave</span><span class="tag">PWA</span></div>
+        </div>
+        <div><div class="project-status"><div class="dot completed"></div> Completed</div></div>
+      </div>
+      <div class="project-row reveal">
+        <div>
+          <div class="project-num">004</div>
+          <h3 class="project-name">UCU Innovators Hub</h3>
+          <p class="project-desc">A full-stack web platform built for CSC1202 across five milestones. Analytics dashboards with Recharts, JWT-secured endpoints, MySQL/Sequelize ORM, and a React + Tailwind frontend.</p>
+          <div class="project-stack"><span class="tag">React</span><span class="tag">Tailwind</span><span class="tag">Node.js</span><span class="tag">MySQL</span><span class="tag">Recharts</span><span class="tag">JWT</span></div>
+        </div>
+        <div><div class="project-status"><div class="dot completed"></div> Completed</div></div>
+      </div>
+      <div class="project-row reveal">
+        <div>
+          <div class="project-num">005</div>
+          <h3 class="project-name">ChatWave</h3>
+          <p class="project-desc">A WhatsApp-style messaging platform featuring real-time Socket.io messaging, WebRTC video calls, and an Anthropic-powered "Wave" AI chatbot. Built as a personal portfolio project.</p>
+          <div class="project-stack"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Socket.io</span><span class="tag">WebRTC</span><span class="tag">Anthropic API</span></div>
+        </div>
+        <div><div class="project-status"><div class="dot completed"></div> Completed</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <div class="contact-item">
+          <strong>Phone</strong>
+          <a href="tel:+256769330215">+256 769 330 215</a>
+        </div>
+        <div class="contact-item">
+          <strong>Email</strong>
+          <a href="mailto:stephenpiramoe@gmail.com">stephenpiramoe@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <strong>GitHub</strong>
+          <a href="https://github.com/Stephen10piramoe" target="_blank">Stephen10piramoe</a>
+        </div>
+        <div class="contact-item">
+          <strong>Location</strong>
+          <span>Karenga, Uganda</span>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form id="contactForm">
+          <input name="name" placeholder="piramoe stephen" required />
+          <input name="email" type="email" placeholder="stephenpiramoe@gmail.com" required />
+          <textarea name="message" placeholder="Message" required></textarea>
+          <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© 2026 Piramoe Stephen — KATIROK TECH SOLUTIONS</div>
+      <div class="footer-links"><a href="#privacy">Privacy</a> · <a href="#terms">Terms</a></div>
+    </div>
+  </footer>
+
+  <script>
+// ========== DARK MODE TOGGLE ==========
+const toggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+const saved = localStorage.getItem('theme') || 'light';
+html.setAttribute('data-theme', saved);
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+}
+
+// ========== ENHANCED SCROLL REVEAL ==========
+const reveals = document.querySelectorAll('.reveal');
+if (reveals.length > 0) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+}
+
+// ========== INTERACTIVE SKILL TAGS ==========
+const tags = document.querySelectorAll('.tag');
+if (tags.length > 0) {
+  tags.forEach(tag => {
+    tag.addEventListener('click', function() {
+      this.style.animation = 'none';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 10);
+    });
+  });
+}
+
+// ========== SMOOTH ANCHOR SCROLLING ==========
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href !== '#' && document.querySelector(href)) {
+      e.preventDefault();
+      document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+// ========== PAGE LOAD ANIMATION ==========
+window.addEventListener('load', () => {
+  document.body.style.animation = 'fadeIn 0.6s ease-out';
+});
+
+// ========== FLOATING AVATAR EFFECT ==========
+const avatar = document.querySelector('.hero-avatar');
+if (avatar) avatar.classList.add('float-item');
+
+// ========== AVATAR UPLOAD (client-side preview + persistence) ==========
+const avatarInput = document.getElementById('avatarInput');
+const uploadBtn = document.getElementById('uploadAvatarBtn');
+const removeBtn = document.getElementById('removeAvatarBtn');
+const avatarInner = document.getElementById('avatarInner');
+const defaultAvatar = document.getElementById('defaultAvatar');
+
+function setAvatarDataURL(dataURL) {
+  if (!avatarInner) return;
+  if (defaultAvatar) defaultAvatar.style.display = 'none';
+  let img = avatarInner.querySelector('img:not(#defaultAvatar)');
+  if (!img) {
+    img = document.createElement('img');
+    avatarInner.insertBefore(img, avatarInner.firstChild);
+  }
+  img.src = dataURL;
+  avatarInner.classList.add('has-photo');
+  localStorage.setItem('avatarData', dataURL);
+  if (removeBtn) removeBtn.style.display = 'inline-flex';
+}
+
+function removeAvatar() {
+  if (!avatarInner) return;
+  const img = avatarInner.querySelector('img:not(#defaultAvatar)');
+  if (img) img.remove();
+  avatarInner.classList.remove('has-photo');
+  localStorage.removeItem('avatarData');
+  if (defaultAvatar) defaultAvatar.style.display = 'block';
+  if (removeBtn) removeBtn.style.display = 'none';
+}
+
+if (defaultAvatar) {
+  defaultAvatar.addEventListener('load', () => {
+    avatarInner.classList.add('has-photo');
+  });
+  defaultAvatar.addEventListener('error', () => {
+    defaultAvatar.style.display = 'none';
+  });
+}
+
+const savedAvatar = localStorage.getItem('avatarData');
+if (savedAvatar && avatarInner) setAvatarDataURL(savedAvatar);
+
+if (uploadBtn && avatarInput) {
+  uploadBtn.addEventListener('click', () => avatarInput.click());
+}
+if (avatarInput) {
+  avatarInput.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setAvatarDataURL(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
+if (removeBtn) removeBtn.addEventListener('click', removeAvatar);
+
+// ========== MOUSE MOVE EFFECT ON NAV ==========
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// ========== PERFORMANCE OBSERVER FOR SCROLL EFFECTS ==========
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// ========== KEYBOARD SHORTCUTS ==========
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'g' && !e.ctrlKey && !e.metaKey) {
+    const github = document.querySelector('a[href*="github.com"]');
+    if (github) github.click();
+  }
+  if (e.key === 'c' && !e.ctrlKey && !e.metaKey) {
+    document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+  }
+});
+  </script>
+</body>
+</html>
